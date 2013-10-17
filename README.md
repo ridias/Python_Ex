@@ -1,3 +1,3 @@
 Python_Ex
 =========
-Nomes son proves per mirar com funciona el github
+Aquí pondre todos los ejercicios y trabajos que he hecho con python. Estan en catalan!
