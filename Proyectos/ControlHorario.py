@@ -15,21 +15,14 @@ def guardarEnLista(elemento, *algomas):
 		lista.append(cosa)
 	
 	return lista
-	
-	
-def verificar(lista):
-	comptador = 0
-	for elemento in lista:
-		if elemento == False or (elemento == "Gym" or elemento == "gym"):
-			comptador = comptador + 1
-			if comptador == 2:
-				print "No puedes estar en el gym, has depasado la hora"
-			else:
-				print "Puedes acceder a la sala Gym, tienes 1 hora para hacer ejercicio a partir de ahora"
-			
+
+				
 def relojActual(cambiar):
 	if cambiar == 59:
 		cambiar = 0
+	elif cambiar == 10:
+		os.system('cls')				#equivalente a clrscr() de pascal o c++ importando arriba
+		
 	
 	return cambiar
 
@@ -51,7 +44,7 @@ def relojEmpresarial(horActual, minutosActual, segundosActual, limite, lugar):
 				comptadorSegundos = 0
 				comptadorMinutos = comptadorMinutos + 1
 				minutosActual = minutosActual + 1
-				os.system('cls')				#equivalente a clrscr() de pascal o c++ importando arriba
+				minutosActual = relojActual(minutosActual)
 				if comptadorMinutos == 59:
 					comptadorMinutos = 0
 					comptadorHoras = comptadorHoras + 1
@@ -68,7 +61,7 @@ def relojEmpresarial(horActual, minutosActual, segundosActual, limite, lugar):
 class Empleado(object):
 	
 	#atributos principales
-	def __init__(self, id, nombre, apellido, edad, oficio, departamento, sala):
+	def __init__(self, id, nombre, apellido, edad, oficio, departamento, sala, limite, entrada, salida):
 		self.id = id
 		self.nombre = nombre
 		self.apellido = apellido
@@ -76,8 +69,11 @@ class Empleado(object):
 		self.oficio = oficio
 		self.departamento = departamento
 		self.sala = sala
+		self.limite = limite
+		self.entrada = entrada
+		self.salida = salida
 		permitirAcceso = False
-		lista = guardarEnLista(id, nombre, apellido, edad, oficio, departamento, sala, permitirAcceso)
+		lista = guardarEnLista(id, nombre, apellido, edad, oficio, departamento, sala, limite, permitirAcceso)
 		
 	
 	#obtener una informacion especifica del empleado
@@ -106,25 +102,41 @@ class Empleado(object):
 		elif elemento == "sala" or elemento == "sala":
 			return self.sala
 			print "Has recibido perfectamente la informacion"
+		elif elemento == "limite" or elemento == "Limite":
+			return self.limite
+			print "Has recibido perfectamente la informacion"
+		elif elemento == "entrada" or elemento == "Entrada":
+			return self.entrada
+			print "Has recibido perfectamente la informacion"
+		elif elemento == "salida" or elemento == "Salida":
+			return self.salida
+			print "Has recibido perfectamente la informacion"
 			
+	#funcion para obtener toda la informacion de empleado en una lista		
 	def getTodoEmpleado(self):
 		print lista
 	
 	
 	#Funcion de modificar la totalidad de la informacion de un Empleado
-	def setTodoEmpleado(self, id, nombre, apellido, edad, oficio, departamento, sala):
+	def setTodoEmpleado(self, id, nombre, apellido, edad, oficio, departamento, sala, limite, entrada, salida):
 		self.id = id
 		self.nombre = nombre
 		self.apellido = apellido
 		self.edad = edad
 		self.oficio = oficio
 		self.departamento = departamento
+		self.sala = sala
+		self.limite = limite
+		self.entrada = entrada
+		self.salida = salida
 		permitirAcceso = False
 		
-		informacion = guardarEnLista(id, nombre, apellido, edad, oficio, departamento, sala, permitirAcceso)
+		informacion = guardarEnLista(id, nombre, apellido, edad, oficio, departamento, sala, limite, entrada, salida, permitirAcceso)
 		print "La informacion se ha cambiado perfectamente"
 		print informacion
 		
+	
+	#funcion que permite modificar un atributo del objeto
 	def setEmpleado(self, elemento):
 		print "La unica informacion que puedes cambiar son (escoge entre uno de estos): id, nombre, apellido, edad, oficio, departamento."
 		elemento = str(raw_input("Que informacion quieres cambiar sobre algun empleado: "))
@@ -153,14 +165,61 @@ class Empleado(object):
 			self.departamento = elemento
 			lista.insert(5, elemento)
 			print "La informacion se ha cambiado perfectamente"
+		elif elemento == "sala" or elemento == "Sala":
+			self.sala = sala
+			lista.insert(6, elemento)
+			print "La informacion se ha cambiado perfectamente"
+		elif elemento == "limite" or elemento == "Limite":
+			self.limite = limite
+			lista.insert(7,elemento)
+			print "La informacion se ha cambiado perfectamente"
+		elif elemento == "entrada" or elemento == "Entrada":
+			self.entrada = entrada
+			lista.insert(8,elemento)
+			print "La informacion se ha cambiado perfectamente"
+		elif elemento == "salida" or elemento == "Salida":
+			self.salida = salida
+			lista.insert(9,elemento)
+			print "La informacion se ha cambiado perfectamente"
 	
+	
+	#funcion que presenta la informacion del objeto creado
+	def datosEmpleado(self):
+		print "Ficha de empleado:"
+		print "Identificacion: ", self.id
+		print "Nombre: ", self.nombre
+		print "Apellidos: ", self.apellido
+		print "Edad: ", self.edad
+		print "Oficio: ", self.oficio
+		print "Departamento: ", self.departamento
+		print "Sala en la que esta ahora: ", self.sala
+		print "Limite de gimnasio: ", self.limite
+		print "Hora de entrada del trabajo: ", self.entrada
+		print "Hora de salida del trabajo: ", self.salida
+		
+		
+	#funcion que permite verificar si un empleado esta en el gym o en el trabajo, fuera de hora	
+	def verificar(lista):
+	comptador = 0
+	for elemento in lista:
+		if elemento == False or (elemento == "Gym" or elemento == "gym"):
+			comptador = comptador + 1
+			if comptador == 2:
+				print "No puedes estar en el gym, has depasado la hora"
+			else:
+				print "Puedes acceder a la sala Gym, tienes 1 hora para hacer ejercicio a partir de ahora"
+		
 
 #Pruebas	
-#carlos = Empleado(1, "Carlos", "Dias", 45, "Programador", "Java")
+Carlos = Empleado(1, "Carlos", "Dias", 45, "Programador", "Java", "Gym", 1, 8, 16)
+Ellie = Empleado(1, "Carlos", "Dias", 45, "Programador", "Java", "Gym", 1, 8, 16)
 #carlos.setTodoEmpleado(2, "Carlos", "Dias", 42, "Programador", "Java")
 
-relojEmpresarial(18,9,0,1,"Gym")
-os.system('cls')				#equivalente a clrscr() de pascal o c++ importando arriba
+listaEmpleados = []
+listaEmpleados.append(Carlos)
+listaEmpleados.append(Ellie)
 
-		
+print listaEmpleados[1].datosEmpleado()
+
+#relojEmpresarial(18,9,0,1,"Gym")
 		
