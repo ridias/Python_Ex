@@ -12,6 +12,7 @@ def buscar(lista, lista2, trobat, lletra):
 	while limit != 0:
 		if lista[pos] == lletra:
 			inserir(lista2, pos, lletra)
+			limit = len(lista)
 			lista[pos] = 0
 			pos = 0
 			trobat = True
@@ -19,7 +20,9 @@ def buscar(lista, lista2, trobat, lletra):
 		limit = limit - 1
 		pos = pos + 1
 	
+	print limit
 	return lista2, trobat
+	
 	
 def inicializarTabla(lista, cuantos):
 
@@ -38,13 +41,15 @@ def inserir(lista2, pos, caracter):
 def verificar(lista, lista2):
 	completo = True
 	pos = 0
-	while completo == True:
-		if lista[pos] == lista2[pos]:
+	x = len(lista)
+	while completo == True and  x!= 0:
+		if lista[pos] == 0:
 			completo = True
 		else:
 			completo = False
 			
 		pos = pos + 1
+		x = x - 1
 		
 	return completo
 	
@@ -70,18 +75,23 @@ print adivinar
 letra = str(raw_input("Entra la primera lletra: "))
 
 while nombrErrors != 12 and guanyat == False:
-	ok = buscar(palabras, adivinar, ok, letra)
-	if ok == True:
+	tupla = buscar(palabras, adivinar, ok, letra)
+	if tupla[1] == True:
 		print adivinar
-		print ok
-		guanyat = verifica(palabras, adivinar)
+		guanyat = verificar(palabras, adivinar)
 		if guanyat == True:
 			print "Has guanyat el joc, has adivinat la paraula"
+		else:
+			letra = str(raw_input("Entra la seguent lletra: "))
 	else:
 		nombrErrors = nombrErrors + 1
-		
-	letra = str(raw_input("Entra la seguent lletra: "))
+		letra = str(raw_input("Entra la seguent lletra: "))
 
+palabra = ""
+for caracter in adivinar:
+	palabra = palabra + caracter
 	
+print "La paraula es: ", palabra
+
 print "Gracies per haver jugat al joc"
 print "Adeu"	
