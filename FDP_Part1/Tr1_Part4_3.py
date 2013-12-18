@@ -14,7 +14,7 @@ seguent = False
 consecutiu = False
 
 while (x != 0) and (numSeq <= 200) and (fi == False):
-	while (x != -99) and (seguent == False):
+	while (x != - 99) and (seguent == False):
 		volum = x*y*z
 		if (igualX == x) and (igualY == y) and (igualZ == z):
 			comptador = comptador + 1
